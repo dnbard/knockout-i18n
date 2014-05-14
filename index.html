@@ -1,0 +1,39 @@
+<!Doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>An awesome knockout.js app</title>
+    <script data-main="app/config" src="bower_components/requirejs/require.js"></script>
+</head>
+<body>
+    <h1>Localization Test</h1>
+    <div>
+        <span>Data Binding:</span>
+        <span class="status" data-bind="text: status">Inactive</span>
+    </div>
+    <div data-bind="i18n: true">
+        <span>Language:[</span>
+        <span data-bind="text: language"></span>
+        <span>]</span>
+        <select name="language" data-bind="value: language">
+            <option value="en">Eng</option>
+            <option value="ru">Rus</option>
+            <option value="fr">Fre</option>
+        </select>
+        <div style="font-weight: bold;">Moment.JS</div>
+        <div date="25 Feb 2005"></div>
+        <div date="29 Jun 2099" locale="en"></div>
+        <div data-bind="date: date"></div>
+        <div date="27 Feb 2011" format="dddd"></div>
+
+        <div style="font-weight: bold;">Numeral.JS</div>
+        <div number="42"></div>
+        <div number="789742.47"></div>
+        <div number="789742.47" locale="en"></div>
+        <div number="12342.47" format="0 a"></div>
+        <div currency="42"></div>
+        <div currency="4578,14"></div>
+        <div currency="4578,14" locale="en"></div>
+    </div>
+</body>
+</html>
