@@ -34,6 +34,32 @@
         <div currency="42"></div>
         <div currency="4578,14"></div>
         <div currency="4578,14" locale="en"></div>
+
+        <div style="font-weight: bold;">MessageFormat.JS</div>
+        <div>
+            <span>No Frills - </span>
+            <span string="welcome/string"></span>
+        </div>
+        <div>
+            <span>No Frills(knockoutjs) - </span>
+            <span data-bind="string: 'welcome/string'"></span>
+        </div>
+        <div>
+            <span>Simple Variable Replacement - </span>
+            <span string="welcome/name" name="General Panic"></span>
+        </div>
+        <div>
+            <span>Simple Variable Replacement(knockoutjs) - </span>
+            <span data-bind="string:{string: 'welcome/name', name: date}"></span>
+        </div>
+        <div>
+            <span>Selective Format - </span>
+            <span data-bind="string:{string: 'welcome/gender', gender: 'female'}"></span>
+        </div>
+        <div>
+            <span>Plural Format - </span>
+            <span data-bind="string:{string: 'welcome/plural', num_results: '1'}"></span>
+        </div>
     </div>
 </body>
 </html>

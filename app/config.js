@@ -11,7 +11,8 @@ require.config({
     'lang-fr': '../bower_components/momentjs/lang/fr',
     'numeral': '../bower_components/numeraljs/numeral',
     'numeral-ru': '../bower_components/numeraljs/languages/ru',
-    'numeral-fr': '../bower_components/numeraljs/languages/fr'
+    'numeral-fr': '../bower_components/numeraljs/languages/fr',
+    'app': '../app'
   },
   map: {
     '*': {

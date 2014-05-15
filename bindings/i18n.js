@@ -3,8 +3,11 @@ define([
     'jquery',
     'pubsub',
     'moment',
-    'numeral'
-], function(ko, $, pubsub, moment, numeral){
+    'numeral',
+    'app/localizationService'
+], function(ko, $, pubsub, moment, numeral, LocalizationService){
+    var localizationService = LocalizationService.getInstance();
+
     function rebind(elements){
         $.each(elements, function(index, value){
             if (typeof value.handler === 'function') {
@@ -63,26 +66,45 @@ define([
         }
     }
 
+    function rebindStringFormatElement(element){
+        var $element = $(element),
+            key = $element.attr('string'),
+            attr = {};
+
+        $.each(element.attributes, function() {
+            if (this.name === 'string') return;
+            attr[this.name.toUpperCase()] = this.value;
+        });
+
+        $element.text(localizationService.get(key, attr));
+    }
+
     ko.bindingHandlers.i18n = {
         init: function(element, valueAccessor, allBindings, viewModel, bindingContext){
             function timeOutHandler (){
                 setTimeout(function(){
-                    var elements = [];
+                    var elements = [],
+                        $element = $(element);
 
                     elements.push({
-                        elements: $(element).find('[date]'),
+                        elements: $element.find('[date]'),
                         handler: rebindDateElement
                     });
 
                     elements.push({
-                        elements: $(element).find('[number]'),
+                        elements: $element.find('[number]'),
                         handler: rebindNumberElement
                     });
 
                     elements.push({
-                        elements: $(element).find('[currency]'),
+                        elements: $element.find('[currency]'),
                         handler: rebindCurrencyElement
                     });
+
+                    elements.push({
+                        elements: $element.find('[string]'),
+                        handler: rebindStringFormatElement
+                    })
                     
                     rebind(elements);
                 }, 0);
@@ -129,6 +151,23 @@ define([
         update: function(element, valueAccessor, allBindings, viewModel, bindingContext){
             koBindingHandler(element, 'currency', ko.utils.unwrapObservable(valueAccessor()));
             rebindNumberElement(element);
+        }
+    }
+
+    ko.bindingHandlers.string = {
+        update: function(element, valueAccessor, allBindings, viewModel, bindingContext){
+            var attrValue = valueAccessor();
+            if (typeof attrValue === 'string'){
+                koBindingHandler(element, 'string', attrValue);
+                
+            } else if (typeof attrValue === 'object'){
+                $.each(attrValue, function(index, attrObservable){
+                    var attr = typeof attrObservable === 'function'? attrObservable() : attrObservable;
+                    koBindingHandler(element, index, attr);
+                });
+            }
+
+            rebindStringFormatElement(element);
         }
     }
 });

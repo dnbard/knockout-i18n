@@ -15,16 +15,6 @@ module.exports = function(grunt) {
     clean: {
       files: ['dist']
     },
-    concat: {
-      options: {
-        banner: '<%= banner %>',
-        stripBanners: true
-      },
-      dist: {
-        src: ['components/requirejs/require.js', '<%= concat.dist.dest %>'],
-        dest: 'dist/require.js'
-      },
-    },
     uglify: {
       options: {
         banner: '<%= banner %>'
@@ -106,6 +96,29 @@ module.exports = function(grunt) {
           }
         }
       }
+    },
+    shell:{
+      messageformat:{
+        command: [
+          'messageformat -l en -i localization/en -o localization/en.js -ns window.i18n_en',
+          'messageformat -l ru -i localization/ru -o localization/ru.js -ns window.i18n_ru',
+          'messageformat -l fr -i localization/fr -o localization/fr.js -ns window.i18n_fr'
+        ].join('&&')
+      }
+    },
+    concat: {
+      options: {
+        banner: '<%= banner %>',
+        stripBanners: true
+      },
+      dist: {
+        src: ['components/requirejs/require.js', '<%= concat.dist.dest %>'],
+        dest: 'dist/require.js'
+      },
+      locals: {
+        src:['localization/*.js'],
+        dest: 'app/localization.js'
+      }
     }
   });
 
@@ -124,5 +137,6 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['jshint', 'qunit', 'clean', 'requirejs', 'concat', 'uglify']);
   grunt.registerTask('preview', ['connect:development']);
   grunt.registerTask('preview-live', ['default', 'connect:production']);
+  grunt.registerTask('loc', ['shell:messageformat', 'concat:locals']);
 
 };

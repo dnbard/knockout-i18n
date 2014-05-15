@@ -1,3 +1,6 @@
 {
-    "string": "добро пожаловать"
+    "string": "добро пожаловать",
+    "name": "His name is {NAME} RUSSKE",
+    "gender": "{GENDER, select, male{He} female{She} other{They}} liked this RUSSKE",
+    "plural": "There {NUM_RESULTS, plural, one{is one result} other{are # results}} RUSSKE"
 }

@@ -1,25 +1,19 @@
 define([
     'jquery',
     'knockout',
-    'moment',
     'pubsub',
-    'numeral',
+    'app/localizationService',
 
-    'bindings/i18n',
-    'lang-ru',
-    'lang-fr',
-    'numeral-ru',
-    'numeral-fr'
-], function($, ko, moment, pubsub, numeral) {
+    'bindings/i18n'
+], function($, ko, pubsub, LocalizationService) {
     function setLanguage(language){
-        moment.lang(language);
-        numeral.language(language);
         pubsub.publish('language', language);
     }
     
     function ViewModel(options) {
         var self = this,
-            langs = langs;
+            langs = langs,
+            localizationService = LocalizationService.getInstance();
 
         self.status = ko.observable('active');
 

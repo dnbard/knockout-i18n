@@ -1,0 +1,6 @@
+{
+    "string": "Welcome",
+    "name": "His name is {NAME}",
+    "gender": "{GENDER, select, male{He} female{She} other{They}} liked this",
+    "plural": "There {NUM_RESULTS, plural, one{is one result} other{are # results}}"
+}

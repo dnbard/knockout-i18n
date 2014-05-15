@@ -1,3 +1,6 @@
 {
-    "string": "accueil"
+    "string": "accueil",
+    "name": "His name is {NAME} FRENCH",
+    "gender": "{GENDER, select, male{He} female{She} other{They}} liked this FRENCH",
+    "plural": "There {NUM_RESULTS, plural, one{is one result} other{are # results}} FRENCH"
 }
