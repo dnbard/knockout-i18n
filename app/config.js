@@ -6,6 +6,7 @@ require.config({
     'bindings': '../bindings',
     'jquery': '../bower_components/jquery/dist/jquery',
     'moment': '../bower_components/momentjs/moment',
+    'moment-timezone': '../bower_components/moment-timezone/moment-timezone',
     'pubsub': '../bower_components/pubsub/pubsub.min',
     'lang-ru': '../bower_components/momentjs/lang/ru',
     'lang-fr': '../bower_components/momentjs/lang/fr',

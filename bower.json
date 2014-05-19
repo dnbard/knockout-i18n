@@ -6,6 +6,7 @@
         "qunit": "~1.12.0",
         "knockout.js": "~2.3.0",
         "momentjs": "latest",
+        "moment-timezone": "latest",
         "pubsub": "latest",
         "numeraljs": "latest",
         "messageformat": "latest"

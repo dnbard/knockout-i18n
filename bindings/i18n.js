@@ -2,11 +2,20 @@ define([
     'ko',
     'jquery',
     'pubsub',
-    'moment',
+    'moment-timezone',
     'numeral',
     'app/localizationService'
 ], function(ko, $, pubsub, moment, numeral, LocalizationService){
-    var localizationService = LocalizationService.getInstance();
+    var localizationService = LocalizationService.getInstance(),
+        timezone;
+
+    function getTimezone (){
+        if (!timezone){
+            timezone = LocalizationService.timezone()
+        }
+
+        return timezone;
+    }
 
     function rebind(elements){
         $.each(elements, function(index, value){
@@ -25,9 +34,16 @@ define([
             format = $element.attr('format') || 'MMMM Do YYYY, h:mm:ss a',
             locale = $element.attr('locale') || moment.lang();
 
-        $element.text(moment($element.attr('date'))
-            .lang(locale)
-            .format(format));
+        if(getTimezone()){
+            $element.text(moment($element.attr('date'))
+                .lang(locale)
+                .tz(getTimezone())
+                .format(format));
+        } else {
+            setTimeout(function(){
+                rebindDateElement(element);
+            }, 250);
+        }
     }
 
     function rebindNumberElement(element){

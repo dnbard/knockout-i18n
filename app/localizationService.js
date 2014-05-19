@@ -1,4 +1,5 @@
 define([
+    'jquery',
     'moment',
     'pubsub',
     'numeral',
@@ -7,12 +8,15 @@ define([
     'lang-fr',
     'numeral-ru',
     'numeral-fr',
-    'app/localization'
-], function(moment, pubsub, numeral){
+    'app/localization',
+    'moment-timezone'
+], function($, moment, pubsub, numeral, moment_timezone){
     var instance = null,
         locals = ['en', 'fr', 'ru'],
         globalNameSpace = 'i18n_',
-        i18n;
+        i18n,
+        timezones,
+        currentTimezone;
 
     function getInstance (){
         if (!instance){
@@ -84,10 +88,35 @@ define([
         return i18n;
     }
 
+    function initTimezones(callback){
+        $.ajax({
+            url: 'app/moment-timezone.json'})
+            .success(callback)
+            .error(function(){
+                console.log('Can\'t load timezones');
+            }
+        );
+    }
+
+    function setTimezone(){
+        return 'America/Toronto';
+        //return 'Africa/Asmara';
+    }
+
+    function getTimezone(){
+        return currentTimezone;
+    }
+
     i18n = init(locals, i18n);
+    initTimezones(function(data){
+        timezones = data;
+        moment.tz.add(data);
+        currentTimezone = setTimezone();
+    });
 
     return {
         getInstance: getInstance,
-        reset: reset
+        reset: reset,
+        timezone: getTimezone
     }
 });
